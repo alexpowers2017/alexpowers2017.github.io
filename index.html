@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web Page</title>
+
+    <!-- D3 Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/topojson@3"></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+    <!-- Project Files/Imports -->
+    <script src="lib/city_select.js"></script>
+    <script src="lib/maps.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .land {
+            fill: #222;
+        }
+        
+        .state-boundary {
+            fill: none;
+            stroke: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>National Park Recommender</h1>
+    </header>
+    <main>
+        <div id="content">
+            <div id="form">
+                <h4>Fill out this form to see the best parks for you to visit.</h4>
+                <form onsubmit="handleSubmit(event)">
+                    <label for="prompt">Describe your ideal vacation:</label>
+                    <textarea id="prompt" rows="4" cols="40" placeholder="What are you interested in? (e.g., hot springs, hiking, stargazing)" required></textarea>
+                    <br><br>
+
+                    <!----------Add by Ian City Dropdown------------>
+                    <label for="city">Enter a city:</label>
+                    <input type="text" id="city" name="city" autocomplete="off">
+                    <div id="suggestions"></div>
+                    <!--------------------------------------------->
+
+                    <label for="month">What month is your trip?</label>
+                    <select id="month" required>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                    <br><br>
+
+                    <label>How do you feel about crowds?</label><br>
+                    <input type="radio" name="crowd" value="0" required>I want to avoid crowds.<br>
+                    <input type="radio" name="crowd" value="1">I want to go at the most popular times.<br>
+                    <input type="radio" name="crowd" value="null">No preference.
+                    <br><br>
+
+                    <button type="submit">Submit</button>
+                </form>
+
+            </div>
+            <div id="map-container">
+                <svg id="map"></svg>
+                <div class="tooltip"></div>
+            </div>
+            <div id="legend" style="visibility: hidden;">
+                <h3>Legend</h3>
+                <p>
+                    <span class="keyword">Overall Score:</span> This is our model's overall recommendation score. It accounts for each of the other scores, weighted according to the total volume of reviews available.
+                </p>
+                <p>
+                    <span class="keyword">Review Score:</span> This score rates the similarity of your prompt to the text of all google reviews for each park from 0-1. This score is calculated using cosine similarity with Term Frequency–Inverse Document
+                    Frequency (TF-IDF).
+                </p>
+                <p>
+                    <span class="keyword">Wikipedia Score:</span> This score rates the similarity of your prompt to the text of all google reviews for each park from 0-1. This score is calculated using cosine similarity with TF-IDF.
+                </p>
+                <p>
+                    <span class="keyword">Crowd Score:</span> This score rates how well a trip to this park in the month you selected aligns with your selected crowd preference.
+                </p>
+            </div>
+
+        </div>
+        <div id="table-container"></div>
+    </main>
+</body>
+
+</html>
