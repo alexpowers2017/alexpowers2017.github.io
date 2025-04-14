@@ -88,34 +88,20 @@ td {
     padding: 8px;
 }
 
-
-/* Style all input fields, textarea, and select dropdown uniformly */
-
 input[type="text"],
 textarea,
 select {
     width: 100%;
-    /* Makes the input fields and dropdown full width */
     padding: 10px;
-    /* Adds padding inside the input fields */
     border: 1px solid #ccc;
-    /* Adds a light border */
     border-radius: 4px;
-    /* Rounded corners */
     font-size: 1em;
-    /* Makes the text inside the input fields and dropdown consistent */
     margin: 8px 0;
-    /* Adds space between fields */
     box-sizing: border-box;
-    /* Ensures padding and borders are included in the total width */
 }
-
-
-/* Adjust the textarea to make it consistent with other inputs */
 
 textarea {
     height: 150px;
-    /* Adjust height for the textarea */
 }
 
 
@@ -130,6 +116,9 @@ button[type="submit"] {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s;
+    vertical-align: center;
+    display: flex;
+    align-items: center;
 }
 
 
@@ -137,6 +126,25 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
     background-color: #0056b3;
+}
+
+.spinner {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 1s linear infinite;
+    margin-left: 7px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 

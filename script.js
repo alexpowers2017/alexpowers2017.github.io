@@ -49,6 +49,10 @@ async function handleSubmit(event) {
         body: JSON.stringify(inputsObj)
     };
 
+    // Start the spinner and turn the submit button gray
+    document.getElementById('loading-wheel').style.display = 'inline-block';
+    document.getElementById('submit-button').style.backgroundColor = 'lightgray';
+
     // Send request and pull park data from json file
     const [response, parkJson, res] = await Promise.all([
         fetch(requestUrl, requestObj),
@@ -69,6 +73,10 @@ async function handleSubmit(event) {
     d3.select('#table-container').selectAll('*').remove();
 
     createTable(fullData);
+
+    // Stop the spinner and turn the button blue again
+    document.getElementById('loading-wheel').style.display = 'none';
+    document.getElementById('submit-button').style.backgroundColor = '#0056b3';
 }
 
 
@@ -157,7 +165,11 @@ function createTable(joinedData, sortKey = 'score') {
         const row = document.createElement('tr');
         Object.keys(tableHeaderMap).forEach(key => {
             const td = document.createElement('td');
-            td.textContent = item[key];
+            if (isNumber(item[key])) {
+                td.textContent = Math.round(item[key] * 100) / 100;
+            } else {
+                td.textContent = item[key];
+            }
             if (['score', 'reviewScore', 'wikipediaScore', 'crowdScore'].includes(key)) {
                 td.style.backgroundColor = scales[key](item[key]);
                 td.style.textAlign = 'center';
