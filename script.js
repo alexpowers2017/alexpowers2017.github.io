@@ -63,15 +63,13 @@ async function handleSubmit(event) {
     const mapJson = await res.json();
     fullData = joinParksData(parkJson, modelResponse.data);
 
-    // Delete everything from the map svg
+    console.log(modelResponse);
+    // Delete and recreate the map, displaying the results of the model
     d3.select('#map').selectAll('*').remove();
-
-    // Recreate the map, displaying the results of the model
     mapWithModelResults(mapJson, fullData);
 
-    // Delete everything from the table svg
+    // Delete and recreate the table
     d3.select('#table-container').selectAll('*').remove();
-
     createTable(fullData);
 
     // Stop the spinner and turn the button blue again
@@ -141,12 +139,10 @@ function createTable(joinedData, sortKey = 'score') {
 
     const container = document.getElementById("table-container");
 
-    // Create the table and header
     const table = document.createElement("table");
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
 
-    // Get headers from our tableHeaderMap object
     Object.entries(tableHeaderMap).forEach(([key, value]) => {
         const th = document.createElement('th');
         th.innerHTML = key === sortKey ? `${value} &darr;` : value;
@@ -154,11 +150,9 @@ function createTable(joinedData, sortKey = 'score') {
         headerRow.appendChild(th);
     });
 
-    // Add header to table
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    // Create body
     const tbody = document.createElement('tbody');
 
     sortedData.forEach(item => {
@@ -179,10 +173,7 @@ function createTable(joinedData, sortKey = 'score') {
         tbody.appendChild(row);
     });
 
-    // Add table body to table
     table.appendChild(tbody);
-
-    // Add table to document
     container.appendChild(table);
 
     document.getElementById('legend').style.visibility = 'visible';
