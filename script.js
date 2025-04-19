@@ -6,6 +6,7 @@ const tableHeaderMap = {
     name: 'Park Name',
     state: 'State',
     description: 'Description',
+    review: 'Top Reviews',
     score: 'Overall Score',
     reviewScore: 'Review Score',
     wikipediaScore: 'Wikipedia Score',
@@ -168,6 +169,9 @@ function createTable(joinedData, sortKey = 'score') {
             if (['score', 'reviewScore', 'wikipediaScore', 'crowdScore'].includes(key)) {
                 td.style.backgroundColor = scales[key](item[key]);
                 td.style.textAlign = 'center';
+            }
+            if (['description', 'review'].includes(key)) {
+                td.classList = 'small-table-text';
             }
             row.appendChild(td);
         });

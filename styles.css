@@ -88,6 +88,10 @@ td {
     padding: 8px;
 }
 
+.small-table-text {
+    font-size: 0.7em;
+}
+
 input[type="text"],
 textarea,
 select {
