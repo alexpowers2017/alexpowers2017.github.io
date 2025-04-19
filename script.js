@@ -60,10 +60,11 @@ async function handleSubmit(event) {
         fetch(`https://cdn.jsdelivr.net/npm/us-atlas@3/states-albers-10m.json`)
     ]);
     const modelResponse = await response.json();
+    console.log(modelResponse);
     const mapJson = await res.json();
     fullData = joinParksData(parkJson, modelResponse.data);
 
-    console.log(modelResponse);
+
     // Delete and recreate the map, displaying the results of the model
     d3.select('#map').selectAll('*').remove();
     mapWithModelResults(mapJson, fullData);
